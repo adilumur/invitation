@@ -584,3 +584,85 @@
   box-shadow: none;
   transform: none;
 }
+
+
+/* ---------- Responsive fixes (вставь в конец style.css) ---------- */
+
+/* Базовый адаптивный шаг */
+html { font-size: 16px; }
+
+/* Адаптивные размеры заголовков/текста */
+.pre-title { font-size: clamp(18px, 4.5vw, 30px); }
+.title-name { font-size: clamp(24px, 6.5vw, 40px); }
+.title-jubely { font-size: clamp(14px, 3.5vw, 22px); }
+.subtitle { font-size: clamp(16px, 4.5vw, 25px); margin: 28px 12px 18px; }
+.subtitle2 { 
+  font-size: clamp(13px, 3.8vw, 18px); 
+  max-width: 92%;
+  margin: 8px auto;
+  line-height: 1.45;
+  hyphens: auto;
+}
+
+/* Сделать контейнер и карточку более гибкими */
+.card {
+  padding: clamp(14px, 4vw, 28px);
+  margin: 0 12px;
+}
+
+/* Поля и кнопки не будут выходить за ширину контейнера */
+.rsvp2-input, .rsvp2-btn, #partnerName, #kidsList input, .map-links a {
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-break: break-word; /* для очень длинных слов/без пробелов */
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Радио-опции — разрешаем переносы внутри опции */
+.option {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Календарь — более компактный на мобилках */
+.calendar-grid .day { 
+  font-size: clamp(12px, 2.6vw, 16px);
+  height: clamp(34px, 8vw, 44px);
+  padding: 4px;
+}
+
+/* Сетка фото дресс-кода — пусть фото меняют размер аккуратно */
+.dress-photos {
+  gap: clamp(8px, 2.6vw, 16px);
+}
+
+/* Мелкие правки для кнопок/мини-кнопки на маленьких экранах */
+@media (max-width: 720px) {
+  .rsvp2-btn { width: 100%; box-sizing: border-box; }
+  .mini-btn { width: auto; }
+  .subtitle { margin-left: 12px; margin-right: 12px; }
+  .event-date { padding-left: 10px; padding-right: 10px; }
+  .map-links a { min-width: 140px; padding: 10px 12px; font-size: 13px; }
+}
+
+/* Ещё более узкие экраны — сильнее уменьшаем текст */
+@media (max-width: 420px) {
+  .pre-title { font-size: clamp(16px, 5.6vw, 22px); }
+  .title-name { font-size: clamp(20px, 7.4vw, 30px); }
+  .subtitle { font-size: clamp(14px, 4.2vw, 18px); }
+  .subtitle2 { font-size: clamp(12px, 3.6vw, 16px); }
+  .count-num { font-size: 20px; padding: 8px; min-width: 58px; }
+}
+
+/* Защита от выхода текста за границы у любых элементов */
+* { word-wrap: break-word; }
+
+/* При необходимости — уменьшаем фоновые орнаменты на мобилке (если мешают) */
+@media (max-width: 520px) {
+  body {
+    background-size: 180px 180px, 160px 160px;
+  }
+}
