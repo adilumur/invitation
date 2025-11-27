@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Приглашение — Вечеринка в стиле 20-х годов</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main" aria-label="Приглашение-событие">
+
+      <!-- Угловые элементы рамки -->
+      <div class="corner tl">
+        <div class="line h"></div>
+        <div class="line v"></div>
+        <div class="line diag"></div>
+        <div class="thin h"></div>
+        <div class="thin v"></div>
+        <div class="glint"></div>
+      </div>
+      <div class="corner tr">
+        <div class="line h"></div>
+        <div class="line v"></div>
+        <div class="line diag"></div>
+        <div class="thin h"></div>
+        <div class="thin v"></div>
+        <div class="glint"></div>
+      </div>
+      <div class="corner bl">
+        <div class="line h"></div>
+        <div class="line v"></div>
+        <div class="line diag"></div>
+        <div class="thin h"></div>
+        <div class="thin v"></div>
+        <div class="glint"></div>
+      </div>
+      <div class="corner br">
+        <div class="line h"></div>
+        <div class="line v"></div>
+        <div class="line diag"></div>
+        <div class="thin h"></div>
+        <div class="thin v"></div>
+        <div class="glint"></div>
+      </div>
+
+      <header class="header" aria-hidden="false">
+        <div class="pre-title">Золотой вечер</div>
+        <div class="title-name">Умурзакова Гульмира</div>
+        <div class="title-jubely">юбилей 50 лет </div>
+
+        <div class="subtitle">Дорогие родные и близкие!</div>
+        <div class="subtitle2">С огромным удовольствием приглашаю вас на блистательное празднование
+                                моего юбилея! </div>
+        <div class="subtitle2">В этот вечер, наполненный атмосферой роскоши, огней и
+                                истинного гламура времен 20-х годов, </div>                        
+        <div class="subtitle2">мы соберёмся вместе, чтобы разделить
+                                радость и создать незабываемые воспоминания!</div>
+      </header>
+
+      <!-- 1) Дата празднования -->
+      <section class="section" aria-labelledby="date-heading">
+        <div class="time-start">Дата:</div>
+        <div class="event-date" id="dateBlock">
+          <div>
+            <div class="value" id="dateValue">03 Января 2026</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2) Календарь с выделенной датой -->
+      <section class="section" aria-labelledby="cal-heading">
+        <div class="calendar-wrap" id="calendarBlock" aria-live="polite">
+          <div class="month-title" id="monthTitle">Январь 2025</div>
+          <div class="calendar-grid" id="calendarGrid" role="grid" aria-labelledby="monthTitle"></div>
+        </div>
+      </section>
+
+      <!-- 3) Время начала -->
+      <section class="section" aria-labelledby="time-heading">
+        <div class="time-start">Время начала:</div>
+        <div class="event-date" id="timeBlock">
+          <div>
+            <div class="month-title" id="timeValue">17:00</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4) Обратный отсчёт -->
+      <section class="section" aria-labelledby="count-heading">
+        <div class="" id="countBlock">
+          <div style="text-align:center;font-family:'Cheque';margin-bottom:15px; font-weight: 600;margin-top:20px;font-size:20px" id="count-heading">До начала великолепия:</div>
+          <div class="countdown-grid" role="timer" aria-live="polite" aria-atomic="true">
+            <div class="count-seg">
+              <div class="count-num" id="cd-days">--</div>
+              <div class="count-label">Дни</div>
+            </div>
+            <div class="count-seg">
+              <div class="count-num" id="cd-hours">--</div>
+              <div class="count-label">Часы</div>
+            </div>
+            <div class="count-seg">
+              <div class="count-num" id="cd-minutes">--</div>
+              <div class="count-label">Минуты</div>
+            </div>
+            <div class="count-seg">
+              <div class="count-num" id="cd-seconds">--</div>
+              <div class="count-label">Секунды</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5) Место празднования -->
+      <section class="section" aria-labelledby="place-heading">
+        <div class="place" id="placeBlock">
+            <div id="place-heading" class="place-heading deco-underline">Место празднования</div>
+            <div class="address center">Город Рудный</div>
+            <div class="address center">улица Комсомольская, 42</div>
+            <div class="place-name center">«Махаббат»</div>
+            <div class="address center">Ресторан</div>
+
+            <div class="map-links" role="navigation" aria-label="Ссылки на карты">
+                <a id="yandexLink" href="https://yandex.com/maps/org/makhabbat/241710813618/" target="_blank" rel="noopener">Яндекс.Карты</a>
+                <a id="dgisLink" href="https://2gis.kz/kostanay/firm/70000001091487668" target="_blank" rel="noopener">2GIS</a>
+            </div>
+
+        </div>
+      </section>
+      <section class="section" aria-labelledby="dress-heading">
+        <div class="block dress-block">
+            
+            <div class="place-heading deco-underline" id="dress-heading">Дресс-код</div>
+            <div class="dress-text">
+                Нам будет приятно видеть джентльменов в <br>классических костюмах,  
+                дам — в вечерних платьях.
+            </div>
+
+            <!-- Место для фотографии -->
+            <div class="dress-photos">
+                <div class="dress-photo">
+                    <img src="pictures/women.jpeg" alt="Образ 1">
+                </div>
+
+                <div class="dress-photo">
+                    <img src="pictures/men.jpeg" alt="Образ 2">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+      <section class="section" aria-labelledby="rsvp2-heading">
+        <div class="block rsvp2-block">
+
+            <div class="rsvp2-title deco-underline" id="rsvp2-heading">
+            Подтверждение участия
+            </div>
+
+            <form id="rsvp2Form">
+
+            <!-- 1. Имя и фамилия -->
+            <div class="rsvp2-row">
+                <label class="rsvp2-label">Имя и Фамилия</label>
+                <input type="text" id="fullName" class="rsvp2-input" required>
+            </div>
+
+            <!-- 2. Вы придёте? -->
+            <div class="rsvp2-row">
+                <label class="rsvp2-label">Вы придёте?</label>
+
+                <label class="option">
+                <input type="radio" name="attend" value="yes" required>
+                Абсолютно точно ДА
+                </label>
+
+                <label class="option">
+                <input type="radio" name="attend" value="no">
+                К сожалению НЕТ, невероятно жаль пропускать этот великолепный вечер
+                </label>
+            </div>
+
+            <!-- 3. Сколько вас будет -->
+            <div class="rsvp2-row" id="peopleBlock" style="display:none;">
+                <label class="rsvp2-label">Сколько вас будет?</label>
+
+                <label class="option">
+                <input type="radio" name="peopleCount" value="1">
+                Я приду один
+                </label>
+
+                <label class="option">
+                <input type="radio" name="peopleCount" value="2">
+                Я приду со своей второй половинкой
+                </label>
+
+                <input type="text" id="partnerName" class="rsvp2-input" placeholder="Имя и Фамилия партнёра" style="display:none;">
+            </div>
+
+            <!-- 4. Дети -->
+            <div class="rsvp2-row" id="kidsBlock" style="display:none;">
+                <label class="rsvp2-label">Приведёте детей?</label>
+
+                <label class="option">
+                <input type="radio" name="kids" value="no">
+                Нет
+                </label>
+
+                <label class="option">
+                <input type="radio" name="kids" value="yes">
+                Да
+                </label>
+
+                <div id="kidsList" style="display:none; margin-top:12px;"></div>
+
+                <button type="button" id="addKidBtn" class="mini-btn" style="display:none;">
+                + Добавить ребёнка
+                </button>
+            </div>
+
+            <!-- ДОБАВИЛ id="rsvpSubmitBtn" -->
+            <button class="rsvp2-btn" id="rsvpSubmitBtn" type="submit">Отправить</button>
+
+            </form>
+
+        </div>
+    </section>
+
+    </div>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+</html>

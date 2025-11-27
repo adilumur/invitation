@@ -1,0 +1,586 @@
+  @font-face {
+    font-family: "Cheque";
+    src: url("cheque/Cheque-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+  }
+ @font-face {
+    font-family: "Lobster";
+    src: url("Lobster/Lobster-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+  }
+  /* --- Палитра (всё под картинку: бежевый фон, тёплое золото, тёмно-коричневый текст) --- */
+  :root{
+    /* Доминирующий бежевый — фон страницы */
+    --bg: #f6efe2;
+
+    /* Карточка — чуть более насыщенный бежевый (никакого чёрного) */
+    --card-top: #f3ead8;
+    --card-bottom: #efe6cf;
+
+    /* Тёмно-коричневый для текста и силуэтоподобных элементов (замена чёрного) */
+    /*<!-- --text: #2b2416; --> */
+    --text: #453a23;
+    /* Золотой акцент (тёплое золото из картинки) */
+    --accent: #b8872e;
+
+    /* Полупрозрачные варианты */
+    --muted: rgba(43,36,22,0.12);
+    --glass: rgba(255,255,255,0.04);
+    --orn-gold-light: rgba(184,135,46,0.06);
+    --orn-gold-strong: rgba(184,135,46,0.22);
+
+    /* Доп. цвета для теней/акцентов (мягкие, не чёрные) */
+    --shadow: rgba(43,36,22,0.10);
+    --border-muted: rgba(184,135,46,0.06);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;font-family: "Georgia", "Times New Roman", serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+
+  /* Фоновый орнамент (арт-деко) — золотые линии поверх бежевого холста */
+  body{
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(69,58,35,0.03) 0%, transparent 20%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><g fill='none' stroke='%23453a23' stroke-opacity='0.30' stroke-width='1'><path d='M100 10 L130 60 L100 110 L70 60 Z' /><path d='M20 100 L70 130 L120 100 L70 70 Z' transform='translate(40,20)'/><circle cx='100' cy='100' r='45' stroke-opacity='0.12'/></g></svg>");
+    background-repeat:repeat;
+    background-size: 260px 260px, 220px 220px;
+  }
+
+  /* Обертка */
+  .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:36px}
+  .card{
+    width:100%;max-width:920px;border-radius:12px;padding:28px;
+    background: linear-gradient(180deg, var(--card-top), var(--card-bottom));
+    border: 1px solid var(--border-muted);
+    box-shadow: 0 14px 40px var(--shadow), 0 0 0 6px rgba(0,0,0,0.03) inset;
+    position:relative; overflow:visible;
+  }
+
+  /* Рамка (арт-деко) — линии золотые, без тёмных заливок */
+  .card::before,
+  .card::after{
+    content:"";
+    pointer-events:none;
+    position:absolute;
+    left:12px; right:12px; top:12px; bottom:12px;
+    border-radius:6px;
+  }
+  .card::before{
+    box-shadow: inset 0 0 0 2px rgba(184,135,46,0.18);
+  }
+  .card::after{
+    left:28px; right:28px; top:28px; bottom:28px;
+    box-shadow: inset 0 0 0 2px rgba(184,135,46,0.12);
+  }
+
+  .corner { position:absolute; width:84px; height:84px; pointer-events:none; }
+  .corner .line {
+    position:absolute;
+    background:linear-gradient(90deg, rgba(184,135,46,0.95), rgba(184,135,46,0.65));
+  }
+  .corner.tl{ left:6px; top:6px; transform:translateZ(0); }
+  .corner.tl .h{ top:6px; left:6px; height:4px; width:64px; border-radius:2px; }
+  .corner.tl .v{ left:6px; top:6px; width:4px; height:64px; border-radius:2px; }
+  .corner.tl .diag{ left:18px; top:18px; width:38px; height:4px; transform: rotate(90deg); }
+
+  .corner.tr{ right:6px; top:6px; }
+  .corner.tr .h{ top:6px; right:6px; height:4px; width:64px; border-radius:2px; }
+  .corner.tr .v{ right:6px; top:6px; width:4px; height:64px; border-radius:2px; }
+
+  .corner.bl{ left:6px; bottom:6px; }
+  .corner.bl .h{ bottom:6px; left:6px; height:4px; width:64px; border-radius:2px; }
+  .corner.bl .v{ left:6px; bottom:6px; width:4px; height:64px; border-radius:2px; }
+
+  .corner.br{ right:6px; bottom:6px; }
+  .corner.br .h{ bottom:6px; right:6px; height:4px; width:64px; border-radius:2px; }
+  .corner.br .v{ right:6px; bottom:6px; width:4px; height:64px; border-radius:2px; }
+
+  .corner .thin {
+    position:absolute;
+    background: linear-gradient(90deg, rgba(184,135,46,0.6), rgba(184,135,46,0.25));
+  }
+  .corner.tl .thin.h{ top:22px; left:22px; height:2px; width:46px; border-radius:1px; }
+  .corner.tl .thin.v{ left:22px; top:22px; width:2px; height:46px; border-radius:1px; }
+  .corner.tr .thin.h{ top:22px; right:22px; height:2px; width:46px; border-radius:1px; }
+  .corner.tr .thin.v{ right:22px; top:22px; width:2px; height:46px; border-radius:1px; }
+  .corner.bl .thin.h{ bottom:22px; left:22px; height:2px; width:46px; border-radius:1px; }
+  .corner.bl .thin.v{ left:22px; bottom:22px; width:2px; height:46px; border-radius:1px; }
+  .corner.br .thin.h{ bottom:22px; right:22px; height:2px; width:46px; border-radius:1px; }
+  .corner.br .thin.v{ right:22px; bottom:22px; width:2px; height:46px; border-radius:1px; }
+
+  /* Контент */
+  .header{ text-align:center; margin-bottom:18px; }
+  .pre-title{ color:var(--accent);font-weight: 900;font-size:30px; letter-spacing:2px; margin:20px 0; text-transform:uppercase; font-family:'Cheque' }
+  .title-name{ color:var(--accent);font-weight: 900;font-size:40px; letter-spacing:2px; margin:15px 0; text-transform:uppercase; font-family:'Cheque' }
+  .title-jubely{ color:var(--accent);font-weight: 900;font-size:22px; letter-spacing:2px; margin:15px 0; text-transform:uppercase; font-family:'Cheque' }
+  .subtitle{ color:var(--text); opacity:0.95;font-weight: 600; margin: 40px 20px 20px 20px; font-size:25px; font-family:'Cheque'; letter-spacing:1px }
+  .subtitle2{ color:var(--text); opacity:0.92; font-size:18px; }
+
+  .section{ background:transparent; padding:12px 8px; margin-bottom:12px; border-radius:8px }
+  .block{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.01));
+    border:1px solid rgba(184,135,46,0.04);
+    padding:14px;border-radius:10px;
+  }
+
+  .event-date {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    position: relative;
+    padding: 16px 0;
+  }
+  .event-date::before, .event-date::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 32%;
+    height: 1.6px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(184,135,46,0.25) 20%,
+      var(--accent) 50%,
+      rgba(184,135,46,0.25) 80%,
+      transparent 100%
+    );
+    transform: translateY(-50%);
+  }
+  .event-date::before {
+    left: 0;
+}
+
+/* Правая линия */
+.event-date::after {
+    right: 0;
+}
+  .spacing-between{
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 90%;
+    height: 1.6px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(184,135,46,0.25) 20%,
+      var(--accent) 50%,
+      rgba(184,135,46,0.25) 80%,
+      transparent 100%
+    );
+    transform: translateY(-50%);
+  }
+  .event-date .label{ font-size:13px; color: #e6dbc0 }
+  .event-date .value{ font-size:20px; color:var(--text); font-weight:700; letter-spacing:1px }
+
+  .calendar-wrap{ margin-top:10px }
+  .month-title{ text-align:center; font-weight:700; color:var(--text); margin-bottom:10px; font-size:20px }
+  .calendar-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px }
+  .day-name{ font-size:16px; text-align:center; color: var(--text); padding:6px 0 }
+  .day{ height:44px; display:flex; align-items:center; justify-content:center; border-radius:6px; color:var(--text); font-weight:700; background:transparent }
+  .day.out{ color:var(--muted) }
+  .day.event{
+    background: linear-gradient(180deg,var(--accent), #8f6f30);
+    color: var(--bg); box-shadow: 0 6px 14px rgba(140,105,45,0.14);
+    transform:translateY(-2px);
+  }
+  .day.today{ outline:2px solid rgba(184,135,46,0.06) }
+
+  .time-start{ font-size:20px; letter-spacing:2px; font-weight: 600;margin:15px 0; text-transform:uppercase; font-family:'Cheque'; justify-content:center; align-items:center; display:flex; }
+
+  .countdown-grid{ display:flex; gap:14px; justify-content:center; margin-top:12px; flex-wrap:wrap }
+  .count-seg{ display:flex; flex-direction:column; align-items:center; min-width:84px }
+  .count-num{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+    padding:14px 10px; border-radius:8px; font-size:28px; font-weight:900; color:var(--text);
+    min-width:72px; text-align:center; border:1px solid rgba(184,135,46,0.04);
+  }
+  .count-label{ margin-top:6px; font-size:13px; color: var(--text); text-transform:uppercase; letter-spacing:0.6px }
+
+  .place{ display:flex; flex-direction:column; margin-top: 30px }
+  .place .address{ font-weight:700; color:var(--text); font-size:18px;}
+  .place .place-name{ color:var(--accent); font-weight:400; font-size:25px; font-family: 'Lobster'; }
+  .place .kind{ font-size:12px; color:#e6dbc0 }
+  .map-links{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px }
+  .map-links a{ display:inline-block; padding:8px 10px; border-radius:8px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); text-decoration:none; color:var(--text); font-weight:700 }
+
+  .small{ font-size:13px; color:#e6dbc0 }
+  /* Заголовок секции места */
+.place-heading {font-size:20px; letter-spacing:2px; font-weight: 600;margin:15px 0; text-transform:uppercase; font-family:'Cheque'; justify-content:center; align-items:center; display:flex; 
+    text-align: center;
+    margin-bottom: 10px;
+    position: relative;
+    padding-bottom: 14px;
+}
+
+/* Декоративная линия под заголовком */
+.deco-underline::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(212,175,55,0.25) 20%,
+      var(--accent) 50%,
+      rgba(212,175,55,0.25) 80%,
+      transparent 100%
+    );
+    border-radius: 2px;
+}
+.center {
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+}
+.map-links {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center;
+    gap: 16px;
+    margin-top: 14px;
+}
+
+.map-links a {
+    display: inline-flex !important;
+    justify-content: center;
+    min-width: 210px;
+    padding: 12px 18px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.6px;
+    border-radius: 8px;
+    text-align: center;
+
+    background: linear-gradient(180deg, rgba(212,175,55,0.25), rgba(212,175,55,0.12));
+    border: 1.5px solid rgba(212,175,55,0.45);
+    color: var(--text);
+
+    box-shadow:
+      0 4px 12px rgba(0,0,0,0.35),
+      inset 0 0 10px rgba(212,175,55,0.2);
+
+    transition: all 0.25s ease;
+}
+
+.map-links a:hover {
+    background: linear-gradient(180deg, rgba(212,175,55,0.45), rgba(212,175,55,0.25));
+    border-color: rgba(212,175,55,0.7);
+    box-shadow:
+      0 6px 16px rgba(0,0,0,0.45),
+      inset 0 0 16px rgba(212,175,55,0.35);
+    transform: translateY(-2px);
+}
+
+
+/* На телефонах — кнопки одна под другой */
+@media(max-width: 520px){
+    .map-links {
+        flex-direction: column;
+    }
+    .map-links a {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* Блок дресс-кода */
+.dress-block {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Золотая линия под заголовком */
+.dress-title.deco-underline::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 60%;
+    height: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(212,175,55,0.25) 20%,
+      var(--accent) 50%,
+      rgba(212,175,55,0.25) 80%,
+      transparent 100%
+    );
+    border-radius: 2px;
+}
+
+/* Текст описания */
+.dress-text {
+    font-size: 18px;
+    color: var(--text);
+    opacity: 0.95;
+    line-height: 1.55;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+/* Заглушка под фото */
+.dress-photo-placeholder {
+    width: 100%;
+    max-width: 360px;
+    height: 220px;
+    margin: 0 auto;
+    border: 1px dashed rgba(212,175,55,0.35);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(212,175,55,0.45);
+    font-size: 14px;
+    font-style: italic;
+    background: rgba(255,255,255,0.02);
+}
+
+
+
+  @media(max-width:720px){
+    .calendar-grid .day{ height:40px; font-size:13px }
+    .count-num{ font-size:22px; padding:10px }
+    .count-seg{ min-width:64px }
+    .corner{ width:64px; height:64px }
+    .corner .h{ width:48px; height:5px }
+    .corner .v{ height:48px; width:5px }
+  }
+
+  @media print{
+    body{ background:white; color:black }
+    .card{ box-shadow:none; border:none }
+    .frame{ display:none }
+  }
+
+/* ===========================
+   Стили RSVP (в стиле карточки)
+   =========================== */
+
+/* Контейнер формы — похож на блоки карточки */
+.rsvp2-block {
+  background: linear-gradient(180deg, var(--card-top), var(--card-bottom));
+  border: 1px solid var(--border-muted);
+  box-shadow: 0 8px 20px var(--shadow);
+  padding: 18px;
+  border-radius: 10px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Заголовок формы (центральный, с подчеркиванием в золоте) */
+.rsvp2-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  position: relative;
+  letter-spacing: 1px;
+  /* используем тот же декоративный шрифт, что и в других заголовках */
+  font-family: 'Cheque', Georgia, serif;
+}
+
+/* золотая линия под заголовком */
+.rsvp2-title.deco-underline::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 60%;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(184,135,46,0.20) 20%,
+    var(--accent) 50%,
+    rgba(184,135,46,0.20) 80%,
+    transparent 100%
+  );
+  border-radius: 2px;
+}
+
+/* Строка вопроса */
+.rsvp2-row {
+  margin-bottom: 16px;
+}
+
+/* Лейбл для каждой строки — тёмно-коричневый, аккуратно */
+.rsvp2-label {
+  display: block;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* Поля ввода, textarea и динамические поля */
+.rsvp2-input, .rsvp2-input[type="text"], .rsvp2-input[type="email"], .rsvp2-input[type="number"], #partnerName, #kidsList input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(184,135,46,0.12);
+  background: rgba(255,255,255,0.02);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  transition: box-shadow .18s ease, border-color .18s ease;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+/* В фокусе — лёгкий золотистый акцент */
+.rsvp2-input:focus, .rsvp2-input:active, #partnerName:focus, #kidsList input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 6px 18px rgba(43,36,22,0.06);
+}
+
+/* Опции (радио) — вертикально в мобильной, аккуратно в десктопе */
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* Радио-кнопки — кастомная лёгкая стилизация */
+.option input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Мини-кнопка добавить ребёнка */
+.mini-btn {
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(184,135,46,0.12), rgba(184,135,46,0.06));
+  border: 1px solid rgba(184,135,46,0.18);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  transition: transform .12s ease, box-shadow .12s ease;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+/* Hover эффект мини-кнопки */
+.mini-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(43,36,22,0.06);
+}
+
+/* Главная кнопка отправки */
+.rsvp2-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  background: linear-gradient(180deg, rgba(184,135,46,0.30), rgba(184,135,46,0.12));
+  border: 1.5px solid rgba(184,135,46,0.45);
+  color: #fff; /* на золотом фоне белый текст читается лучше */
+  text-shadow: 0 1px 0 rgba(0,0,0,0.25);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+/* Hover для главной кнопки */
+.rsvp2-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(43,36,22,0.10);
+}
+
+/* Маленькая подсказка/информация */
+.rsvp2-hint {
+  font-size: 13px;
+  color: rgba(69,58,35,0.7);
+  margin-top: 8px;
+}
+
+/* Мобильная адаптация — немного сжимаем отступы */
+@media (max-width: 720px) {
+  .rsvp2-block {
+    padding: 14px;
+  }
+  .rsvp2-title { font-size: 16px; }
+  .rsvp2-input { font-size: 14px; padding: 9px; }
+  .rsvp2-btn { width: 100%; text-align: center; }
+}
+
+/* Если хочешь, чтобы форма выглядела более "центрально" — можно центрировать текст внутри */
+.rsvp2-block.centered { text-align: center; }
+.rsvp2-block.centered .rsvp2-row { text-align: left; }
+
+/* Контейнер двух фото */
+.dress-photos {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 20px;
+    flex-wrap: wrap; /* важно для мобильных */
+}
+
+/* Фото-блоки */
+.dress-photo {
+    width: 100%;
+    max-width: 280px; /* размер фото */
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(212,175,55,0.35);
+    box-shadow:
+        0 8px 24px rgba(0,0,0,0.55),
+        inset 0 0 18px rgba(212,175,55,0.18);
+}
+
+.dress-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* На мобиле — фото становятся друг под другом */
+@media(max-width: 680px){
+    .dress-photo {
+        max-width: 100%;
+    }
+}
+
+/* ------------------------------
+   Состояния кнопки отправки
+   ------------------------------ */
+
+.rsvp2-btn.disabled,
+.rsvp2-btn:disabled {
+  opacity: 0.65;
+  cursor: default;
+  box-shadow: none;
+  transform: none;
+}
+
+.rsvp2-btn.disabled:hover,
+.rsvp2-btn:disabled:hover {
+  box-shadow: none;
+  transform: none;
+}
