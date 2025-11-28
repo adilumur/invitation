@@ -384,7 +384,7 @@ body{
 
 
 /* Заголовок времени — в стиле Cheque с золотой полосой */
-.time-heading {
+/* .time-heading {
     font-family: 'Cheque';
     font-size: 20px;
     text-transform: uppercase;
@@ -393,9 +393,9 @@ body{
     letter-spacing: 2px;
     margin-bottom: 12px;
     position: relative;
-}
+} */
 
-/* линия под заголовком — та же золота как Place / Dress / RSVP */
+/* линия под заголовком — та же золота как Place / Dress / RSVP
 .time-heading.deco-underline::after {
     content: "";
     position: absolute;
@@ -434,4 +434,4 @@ body{
     font-size: 20px;
     color: var(--accent);
     font-weight: 700;
-}
+} */
