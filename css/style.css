@@ -354,3 +354,34 @@ body{
   .option { gap: 8px; }
   .option > input[type="radio"] { width:16px; height:16px; }
 }
+
+/* ====== Счётчик всегда в один ряд ======= */
+
+.countdown-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;  /* запрещаем переносы */
+    justify-content: center;
+    align-items: stretch;
+    gap: clamp(6px, 2vw, 14px);
+    overflow: hidden;              /* предотвращает выход за границы */
+}
+
+.count-seg {
+    min-width: 0;                  /* детям можно сжиматься */
+    flex: 1 1 0;                   /* равномерное распределение */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.count-num {
+    width: 100%;
+    min-width: 0;
+    padding: clamp(8px, 2vw, 14px);
+    font-size: clamp(18px, 5vw, 28px);
+}
+
+.count-label {
+    font-size: clamp(10px, 2.4vw, 13px);
+    text-align: center;
+}
