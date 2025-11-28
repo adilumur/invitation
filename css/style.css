@@ -50,7 +50,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding: clamp(3px, 3vw, 36px);
+  padding: clamp(3px, 1vw, 36px);
 }
 
 /* карточка */
