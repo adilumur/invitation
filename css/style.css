@@ -386,11 +386,17 @@ body{
     text-align: center;
 }
 
-@media (max-width: 768px) {
-  .card {
-    transform: scale(0.75);
-    transform-origin: top center;
-    width: 133.33%; /* 100 / 0.75 = компенсируем масштаб */
-  }
+/* Заголовки — перенос только по целым словам, без разрыва */
+.place-heading,
+.rsvp2-title,
+.dress-block .place-heading,
+.dress-title,
+.title-name,
+.title-jubely,
+.time-start {
+    word-break: keep-all;          /* слова НЕ разрываются */
+    overflow-wrap: normal;         /* не ломать слова */
+    hyphens: none;                 /* отключить авто-дефисы */
+    white-space: normal;           /* разрешить перенос строк только между словами */
 }
 
