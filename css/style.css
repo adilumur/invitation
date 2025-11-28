@@ -386,17 +386,4 @@ body{
     text-align: center;
 }
 
-/* Заголовки — перенос только по целым словам, без разрыва */
-.place-heading,
-.rsvp2-title,
-.dress-block .place-heading,
-.dress-title,
-.title-name,
-.title-jubely,
-.time-start {
-    word-break: keep-all;          /* слова НЕ разрываются */
-    overflow-wrap: normal;         /* не ломать слова */
-    hyphens: none;                 /* отключить авто-дефисы */
-    white-space: normal;           /* разрешить перенос строк только между словами */
-}
 
