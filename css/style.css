@@ -338,12 +338,12 @@ body{
 /* .option::text { noop — нельзя стилизовать текстовые ноды, но ниже даём fallback через span, если понадобится } */
 
 /* Вариант с явным переносом текста: если хочешь, оборачивать текст в <span> внутри label — даёт дополнительный контроль */
-.option span {
+/* .option span {
   display: inline-block;
-  min-width: 0;              /* важно для корректного переноса внутри flex */
+  min-width: 0;             
   word-break: break-word;
   overflow-wrap: break-word;
-}
+} */
 
 /* На очень узких экранах немного уменьшим gap чтобы не давать переноса строки */
 @media (max-width: 420px) {
