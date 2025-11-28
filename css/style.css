@@ -385,3 +385,12 @@ body{
     font-size: clamp(10px, 2.4vw, 13px);
     text-align: center;
 }
+
+@media (max-width: 768px) {
+  .card {
+    transform: scale(0.75);
+    transform-origin: top center;
+    width: 133.33%; /* 100 / 0.75 = компенсируем масштаб */
+  }
+}
+
