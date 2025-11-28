@@ -416,7 +416,7 @@ body{
 }
 
 /* Строки с временем */
-.time-line {
+/* .time-line {
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -434,4 +434,4 @@ body{
     font-size: 20px;
     color: var(--accent);
     font-weight: 700;
-} */
+} */ 
