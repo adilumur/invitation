@@ -435,3 +435,16 @@ body{
     color: var(--accent);
     font-weight: 700;
 } */ 
+
+@media (max-width: 600px) {
+    .dress-photo {
+        max-width: 100% !important;   /* вместо 280px */
+        width: 100%;
+    }
+
+    .dress-photo img {
+        height: auto;
+        width: 100%;
+        object-fit: cover;
+    }
+}
