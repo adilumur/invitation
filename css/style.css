@@ -178,7 +178,7 @@ body{
 
 /* RSVP стили */
 .rsvp2-block { background: linear-gradient(180deg, var(--card-top), var(--card-bottom)); border: 1px solid var(--border-muted); box-shadow: 0 8px 20px var(--shadow); padding: 18px; border-radius: 10px; max-width: 640px; margin: 0 auto; }
-.rsvp2-title { text-align:center; font-size:18px; font-weight:800; color:var(--text); margin-bottom:14px; padding-bottom:12px; position:relative; letter-spacing:1px; font-family:'Cheque', Georgia, serif; }
+.rsvp2-title { word-break: keep-all;   text-align:center; font-size:18px; font-weight:800; color:var(--text); margin-bottom:14px; padding-bottom:12px; position:relative; letter-spacing:1px; font-family:'Cheque', Georgia, serif; }
 .rsvp2-row { margin-bottom:16px; }
 .rsvp2-label { display:block; font-size:14px; color:var(--text); margin-bottom:8px; font-weight:600; }
 .rsvp2-input, .rsvp2-input[type="text"], .rsvp2-input[type="email"], .rsvp2-input[type="number"], #partnerName, #kidsList input { width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(184,135,46,0.12); background: rgba(255,255,255,0.02); color:var(--text); font-size:14px; outline:none; transition: box-shadow .18s ease, border-color .18s ease; box-shadow: inset 0 1px 0 rgba(255,255,255,0.02); }
