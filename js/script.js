@@ -1,18 +1,19 @@
 /* ==============
-   Настройки даты
+   script.js (полный файл)
    ============== */
+
+/* Настройки даты */
 const eventYear = 2026;
-const eventMonth = 0;
+const eventMonth = 0; // январь = 0
 const eventDay = 3;
 const eventHour = 17;
 const eventMinute = 0;
 const eventSecond = 0;
 
-/* =========================
-   Календарь и обратный отсчёт
-   ========================= */
+/* Календарь */
 function buildCalendar(year, month, highlightDay){
   const grid = document.getElementById('calendarGrid');
+  if(!grid) return;
   grid.innerHTML = '';
   const dayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
   for(let i=0;i<7;i++){
@@ -56,10 +57,13 @@ function buildCalendar(year, month, highlightDay){
     }
   }
   const monthNames = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-  document.getElementById('monthTitle').textContent = monthNames[month] + ' ' + year;
-  document.getElementById('dateValue').textContent = String(highlightDay).padStart(2,'0') + ' ' + monthNames[month] + ' ' + year;
+  const monthTitle = document.getElementById('monthTitle');
+  if(monthTitle) monthTitle.textContent = monthNames[month] + ' ' + year;
+  const dv = document.getElementById('dateValue');
+  if(dv) dv.textContent = String(highlightDay).padStart(2,'0') + ' ' + monthNames[month] + ' ' + year;
 }
 
+/* Обратный отсчёт */
 function startCountdown(targetDate){
   const daysEl = document.getElementById('cd-days');
   const hoursEl = document.getElementById('cd-hours');
@@ -74,31 +78,26 @@ function startCountdown(targetDate){
     const hours = Math.floor((totalSec % (3600*24)) / 3600);
     const minutes = Math.floor((totalSec % 3600) / 60);
     const seconds = totalSec % 60;
-    daysEl.textContent = String(days).padStart(2,'0');
-    hoursEl.textContent = String(hours).padStart(2,'0');
-    minutesEl.textContent = String(minutes).padStart(2,'0');
-    secondsEl.textContent = String(seconds).padStart(2,'0');
+    if(daysEl) daysEl.textContent = String(days).padStart(2,'0');
+    if(hoursEl) hoursEl.textContent = String(hours).padStart(2,'0');
+    if(minutesEl) minutesEl.textContent = String(minutes).padStart(2,'0');
+    if(secondsEl) secondsEl.textContent = String(seconds).padStart(2,'0');
   }
   update();
   setInterval(update, 1000);
 }
 
-/* ==================
-   Инициализация даты
-   ================== */
+/* Инициализация */
 (function init(){
   buildCalendar(eventYear, eventMonth, eventDay);
-  document.getElementById('timeValue').textContent =
-    String(eventHour).padStart(2,'0') + ':' + String(eventMinute).padStart(2,'0');
+  const timeValue = document.getElementById('timeValue');
+  if(timeValue) timeValue.textContent = String(eventHour).padStart(2,'0') + ':' + String(eventMinute).padStart(2,'0');
   const targetDate = new Date(eventYear, eventMonth, eventDay, eventHour, eventMinute, eventSecond);
   startCountdown(targetDate);
 })();
 
-/* =========================
-   Логика формы RSVP
-   ========================= */
+/* ============ RSVP логика ============ */
 
-// Кэшируем элементы
 const rsvpForm   = document.getElementById("rsvp2Form");
 const submitBtn  = document.getElementById("rsvpSubmitBtn");
 const peopleBlock= document.getElementById("peopleBlock");
@@ -107,13 +106,8 @@ const partnerName= document.getElementById("partnerName");
 const kidsList   = document.getElementById("kidsList");
 const addKidBtn  = document.getElementById("addKidBtn");
 
-// Проверка видимости (display:none / не в DOM)
-function isVisible(el) {
-  if (!el) return false;
-  return el.offsetParent !== null;
-}
-
-// Радиогруппа выбрана?
+// Проверка видимости
+function isVisible(el) { if(!el) return false; return el.offsetParent !== null; }
 function radioGroupChecked(formEl, name) {
   const radios = formEl.querySelectorAll(`input[name="${name}"]`);
   if (!radios.length) return true;
@@ -123,29 +117,16 @@ function radioGroupChecked(formEl, name) {
 // Синхронизировать required для видимых полей
 function syncRequiredAttributes() {
   if (!rsvpForm) return;
-
-  // Текстовые/числовые/textarea/select
-  const controls = rsvpForm.querySelectorAll(
-    "input[type='text'], input[type='email'], input[type='tel'], input[type='number'], textarea, select"
-  );
+  const controls = rsvpForm.querySelectorAll("input[type='text'], input[type='email'], input[type='tel'], input[type='number'], textarea, select");
   controls.forEach(ctrl => {
     const visible = isVisible(ctrl);
-    if (visible) {
-      ctrl.setAttribute("required", "required");
-    } else {
-      ctrl.removeAttribute("required");
-    }
+    if (visible) ctrl.setAttribute("required", "required");
+    else ctrl.removeAttribute("required");
   });
-
-  // Радио-группы
-  const radioNames = Array.from(
-    new Set(Array.from(rsvpForm.querySelectorAll("input[type='radio']")).map(r => r.name))
-  );
-
+  const radioNames = Array.from(new Set(Array.from(rsvpForm.querySelectorAll("input[type='radio']")).map(r => r.name)));
   radioNames.forEach(name => {
     const radios = rsvpForm.querySelectorAll(`input[name="${name}"]`);
     const groupVisible = Array.from(radios).some(r => isVisible(r));
-
     if (groupVisible) {
       radios.forEach((r, idx) => {
         if (idx === 0) r.setAttribute("required", "required");
@@ -157,78 +138,56 @@ function syncRequiredAttributes() {
   });
 }
 
-// Показ/скрытие блоков в зависимости от "Вы придёте?"
+// show/hide логика
 document.querySelectorAll("input[name='attend']").forEach(el => {
   el.addEventListener("change", () => {
     const value = el.value;
-
     if (value === "yes") {
-      peopleBlock.style.display = "block";
-      kidsBlock.style.display = "block";
+      if (peopleBlock) peopleBlock.style.display = "block";
+      if (kidsBlock) kidsBlock.style.display = "block";
     } else {
-      peopleBlock.style.display = "none";
-      kidsBlock.style.display = "none";
-
-      // очистим поля и визуал
-      if (partnerName) {
-        partnerName.value = "";
-        partnerName.style.display = "none";
+      if (peopleBlock) peopleBlock.style.display = "none";
+      if (kidsBlock) kidsBlock.style.display = "none";
+      if (partnerName) { partnerName.value = ""; partnerName.style.display = "none"; }
+      if (kidsList) { kidsList.innerHTML = ""; kidsList.style.display = "none"; }
+      if (addKidBtn) addKidBtn.style.display = "none";
+      if (rsvpForm) {
+        rsvpForm.querySelectorAll("input[name='peopleCount']").forEach(r => r.checked = false);
+        rsvpForm.querySelectorAll("input[name='kids']").forEach(r => r.checked = false);
       }
-      if (kidsList) {
-        kidsList.innerHTML = "";
-        kidsList.style.display = "none";
-      }
-      if (addKidBtn) {
-        addKidBtn.style.display = "none";
-      }
-
-      // снимаем выбор радио peopleCount, kids
-      rsvpForm.querySelectorAll("input[name='peopleCount']").forEach(r => r.checked = false);
-      rsvpForm.querySelectorAll("input[name='kids']").forEach(r => r.checked = false);
     }
-
     syncRequiredAttributes();
   });
 });
 
-// Пара: включить/скрыть поле ввода партнёра
 document.querySelectorAll("input[name='peopleCount']").forEach(el => {
   el.addEventListener("change", () => {
     if (el.value === "2") {
-      partnerName.style.display = "block";
+      if (partnerName) partnerName.style.display = "block";
     } else {
-      partnerName.style.display = "none";
-      partnerName.value = "";
+      if (partnerName) { partnerName.style.display = "none"; partnerName.value = ""; }
     }
     syncRequiredAttributes();
   });
 });
 
-// Дети: показать/скрыть список и кнопку добавления
 document.querySelectorAll("input[name='kids']").forEach(el => {
   el.addEventListener("change", () => {
     const value = el.value;
-
     if (value === "yes") {
-      kidsList.style.display = "block";
-      addKidBtn.style.display = "inline-block";
-
-      // по желанию — добавляем одно поле при первом включении
-      if (kidsList.children.length === 0) {
-        addKidInput();
-      }
+      if (kidsList) kidsList.style.display = "block";
+      if (addKidBtn) addKidBtn.style.display = "inline-block";
+      if (kidsList && kidsList.children.length === 0) addKidInput();
     } else {
-      kidsList.style.display = "none";
-      addKidBtn.style.display = "none";
-      kidsList.innerHTML = "";
+      if (kidsList) { kidsList.style.display = "none"; kidsList.innerHTML = ""; }
+      if (addKidBtn) addKidBtn.style.display = "none";
     }
-
     syncRequiredAttributes();
   });
 });
 
-// Функция добавления поля ребёнка
 function addKidInput() {
+  if (!kidsList) return;
   const input = document.createElement("input");
   input.type = "text";
   input.placeholder = "Имя и Фамилия ребёнка";
@@ -238,16 +197,9 @@ function addKidInput() {
   kidsList.appendChild(input);
   syncRequiredAttributes();
 }
+if (addKidBtn) addKidBtn.addEventListener("click", (e) => { e.preventDefault(); addKidInput(); });
 
-// Кнопка "+ Добавить ребёнка"
-if (addKidBtn) {
-  addKidBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    addKidInput();
-  });
-}
-
-// Блокировка формы после успешной отправки
+// Блокировка формы после отправки
 function lockFormAfterSubmit() {
   if (submitBtn) {
     submitBtn.disabled = true;
@@ -256,84 +208,63 @@ function lockFormAfterSubmit() {
   }
   if (rsvpForm) {
     Array.from(rsvpForm.elements).forEach(el => {
-      if (el !== submitBtn) {
-        el.disabled = true;
-      }
+      if (el !== submitBtn) el.disabled = true;
     });
   }
 }
 
-// Начальное состояние required
+// начальное состояние required
 syncRequiredAttributes();
 
-/* =================================
-   Сабмит → проверка + отправка в Apps Script
-   ================================= */
-document.getElementById("rsvp2Form").addEventListener("submit", async function(e){
-  e.preventDefault();
+// submit
+if (rsvpForm) {
+  rsvpForm.addEventListener("submit", async function(e){
+    e.preventDefault();
+    syncRequiredAttributes();
 
-  // Обновляем required перед проверкой
-  syncRequiredAttributes();
-
-  // HTML5-валидация: не даём отправить, пока не всё заполнено
-  if (!this.checkValidity()) {
-    this.reportValidity();  // покажет стандартные подсказки браузера
-    return;
-  }
-
-  // К этому моменту все поля, которые должны быть заполнены, валидны
-  if (submitBtn){
-    submitBtn.textContent = "Отправка…";
-    submitBtn.classList.add("disabled");
-    submitBtn.disabled = true;
-  }
-
-  // Собираем значения
-  const getVal = id => (document.getElementById(id) || {}).value || "";
-  const payload = {
-    fullName: getVal("fullName"),
-    attend: (document.querySelector("input[name='attend']:checked") || {}).value || "",
-    peopleCount: (document.querySelector("input[name='peopleCount']:checked") || {}).value || "",
-    partnerName: getVal("partnerName"),
-    kids: (document.querySelector("input[name='kids']:checked") || {}).value || "",
-    kidsList: JSON.stringify(
-      Array.from(document.querySelectorAll("#kidsList input"))
-        .map(i => i.value)
-        .filter(Boolean)
-    )
-  };
-
-  // Формируем body как x-www-form-urlencoded
-  const params = new URLSearchParams();
-  Object.keys(payload).forEach(k => params.append(k, payload[k]));
-
-  try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycby2OCw4dJsO-uAqJcG_4WhBjuuWxMgo1KClPHMEJAEhnUp8D6245yrkbxUAm2Pt3LkAkg/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-      body: params.toString(),
-    });
-
-    const text = await res.text();
-    let parsed = null;
-    try { parsed = JSON.parse(text); } catch(_){}
-
-    console.log("status:", res.status, "body:", text);
-
-    if(!res.ok) throw new Error("Server " + res.status + " — " + text);
-
-    alert("Спасибо! Ваш ответ записан.");
-
-    // Финальное состояние: кнопка "Отправлено" и форма больше не активна
-    lockFormAfterSubmit();
-
-  } catch(err) {
-    console.error("Ошибка отправки:", err);
-    alert("Ошибка при отправке: " + err.message + "\nСмотри консоль (F12) → Network → Response.");
-    if(submitBtn){
-      submitBtn.textContent = "Отправить";
-      submitBtn.classList.remove("disabled");
-      submitBtn.disabled = false;
+    if (!this.checkValidity()) {
+      this.reportValidity();
+      return;
     }
-  }
-});
+
+    if (submitBtn) { submitBtn.textContent = "Отправка…"; submitBtn.classList.add("disabled"); submitBtn.disabled = true; }
+
+    const getVal = id => (document.getElementById(id) || {}).value || "";
+    const payload = {
+      fullName: getVal("fullName"),
+      attend: (document.querySelector("input[name='attend']:checked") || {}).value || "",
+      peopleCount: (document.querySelector("input[name='peopleCount']:checked") || {}).value || "",
+      partnerName: getVal("partnerName"),
+      kids: (document.querySelector("input[name='kids']:checked") || {}).value || "",
+      kidsList: JSON.stringify(Array.from(document.querySelectorAll("#kidsList input")).map(i=>i.value).filter(Boolean))
+    };
+
+    const params = new URLSearchParams();
+    Object.keys(payload).forEach(k => params.append(k, payload[k]));
+
+    try {
+      const res = await fetch("https://script.google.com/macros/s/AKfycby2OCw4dJsO-uAqJcG_4WhBjuuWxMgo1KClPHMEJAEhnUp8D6245yrkbxUAm2Pt3LkAkg/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: params.toString(),
+      });
+
+      const text = await res.text();
+      console.log("status:", res.status, "body:", text);
+
+      if(!res.ok) throw new Error("Server " + res.status + " — " + text);
+
+      alert("Спасибо! Ваш ответ записан.");
+      lockFormAfterSubmit();
+
+    } catch(err) {
+      console.error("Ошибка отправки:", err);
+      alert("Ошибка при отправке: " + err.message + "\nСмотри консоль (F12) → Network → Response.");
+      if(submitBtn){
+        submitBtn.textContent = "Отправить";
+        submitBtn.classList.remove("disabled");
+        submitBtn.disabled = false;
+      }
+    }
+  });
+}

@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Приглашение — Вечеринка в стиле 20-х годов</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Приглашение — Вечеринка в стиле 20-х годов</title>
 
-<link rel="stylesheet" href="css/style.css">
+  <!-- Подключаем стили -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="wrap">
@@ -51,17 +52,17 @@
         <div class="title-jubely">юбилей 50 лет </div>
 
         <div class="subtitle">Дорогие родные и близкие!</div>
-        <div class="subtitle2">С огромным удовольствием приглашаю вас на блистательное празднование
-                                моего юбилея! </div>
-        <div class="subtitle2">В этот вечер, наполненный атмосферой роскоши, огней и
-                                истинного гламура времен 20-х годов, </div>                        
-        <div class="subtitle2">мы соберёмся вместе, чтобы разделить
-                                радость и создать незабываемые воспоминания!</div>
+        <p class="subtitle2 long">
+            С огромным удовольствием приглашаю вас на блистательное празднование моего юбилея!<br>
+            В этот вечер, наполненный атмосферой роскоши, огней и истинного гламура времен 20-х годов,<br>
+            мы соберёмся вместе, чтобы разделить радость и создать незабываемые воспоминания!
+        </p>
+
       </header>
 
       <!-- 1) Дата празднования -->
       <section class="section" aria-labelledby="date-heading">
-        <div class="time-start">Дата:</div>
+        <div class="time-start date-time" id="date-heading">Дата:</div>
         <div class="event-date" id="dateBlock">
           <div>
             <div class="value" id="dateValue">03 Января 2026</div>
@@ -79,7 +80,7 @@
 
       <!-- 3) Время начала -->
       <section class="section" aria-labelledby="time-heading">
-        <div class="time-start">Время начала:</div>
+        <div class="time-start date-time" id="time-heading">Время начала:</div>
         <div class="event-date" id="timeBlock">
           <div>
             <div class="month-title" id="timeValue">17:00</div>
@@ -115,7 +116,7 @@
       <!-- 5) Место празднования -->
       <section class="section" aria-labelledby="place-heading">
         <div class="place" id="placeBlock">
-            <div id="place-heading" class="place-heading deco-underline">Место празднования</div>
+            <div id="place-heading" class="place-heading">Место празднования</div>
             <div class="address center">Город Рудный</div>
             <div class="address center">улица Комсомольская, 42</div>
             <div class="place-name center">«Махаббат»</div>
@@ -128,13 +129,12 @@
 
         </div>
       </section>
+
       <section class="section" aria-labelledby="dress-heading">
         <div class="block dress-block">
-            
-            <div class="place-heading deco-underline" id="dress-heading">Дресс-код</div>
+            <div class="place-heading" id="dress-heading">Дресс-код</div>
             <div class="dress-text">
-                Нам будет приятно видеть джентльменов в <br>классических костюмах,  
-                дам — в вечерних платьях.
+                Нам будет приятно видеть джентльменов в классических костюмах, дам — в вечерних платьях.
             </div>
 
             <!-- Место для фотографии -->
@@ -149,20 +149,19 @@
             </div>
 
         </div>
-    </section>
+      </section>
 
+      <!-- RSVP -->
       <section class="section" aria-labelledby="rsvp2-heading">
         <div class="block rsvp2-block">
 
-            <div class="rsvp2-title deco-underline" id="rsvp2-heading">
-            Подтверждение участия
-            </div>
+            <div class="rsvp2-title" id="rsvp2-heading">Подтверждение участия</div>
 
-            <form id="rsvp2Form">
+            <form id="rsvp2Form" novalidate>
 
             <!-- 1. Имя и фамилия -->
             <div class="rsvp2-row">
-                <label class="rsvp2-label">Имя и Фамилия</label>
+                <label class="rsvp2-label" for="fullName">Имя и Фамилия</label>
                 <input type="text" id="fullName" class="rsvp2-input" required>
             </div>
 
@@ -219,16 +218,17 @@
                 </button>
             </div>
 
-            <!-- ДОБАВИЛ id="rsvpSubmitBtn" -->
+            <!-- Кнопка отправки -->
             <button class="rsvp2-btn" id="rsvpSubmitBtn" type="submit">Отправить</button>
 
             </form>
 
         </div>
-    </section>
+      </section>
 
     </div>
   </div>
+
   <script src="js/script.js"></script>
 </body>
 </html>
