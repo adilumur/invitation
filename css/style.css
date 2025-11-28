@@ -29,7 +29,13 @@
 
 /* Базовые правила */
 *{box-sizing:border-box}
-html,body{margin:0;font-family: "Georgia", "Times New Roman", serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+html,body{width: 100%;
+          margin:0;
+          font-family: "Georgia", "Times New Roman", serif;
+          background:var(--bg);
+          color:var(--text);
+          -webkit-font-smoothing:antialiased;
+          overflow-x: hidden;}
 html { font-size: 16px; }
 
 /* фон */
