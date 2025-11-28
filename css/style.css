@@ -262,10 +262,6 @@ body{
 }
 
 /* 4) Переносы и защита от выхода текста */
-.place-heading,
-.rsvp2-title,
-.date-time,
-.map-links a,
 .option {
   word-break: break-word;
   overflow-wrap: break-word;
@@ -385,5 +381,3 @@ body{
     font-size: clamp(10px, 2.4vw, 13px);
     text-align: center;
 }
-
-
