@@ -29,25 +29,13 @@
 
 /* Базовые правила */
 *{box-sizing:border-box}
-
-/* Глобальные правила запрета разрыва слов и дефисов */
-html,body, *::before, *::after {
-  -webkit-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;            /* Запрет дефисов */
-  word-break: normal;       /* Не ломать слова */
-  overflow-wrap: normal;    /* Не переносить слово посередине */
-  -webkit-font-smoothing:antialiased;
-}
-
-html,body{
-  width: 100%;
-  margin:0;
-  font-family: "Georgia", "Times New Roman", serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x: hidden;
-}
+html,body{width: 100%;
+          margin:0;
+          font-family: "Georgia", "Times New Roman", serif;
+          background:var(--bg);
+          color:var(--text);
+          -webkit-font-smoothing:antialiased;
+          overflow-x: hidden;}
 html { font-size: 16px; }
 
 /* фон */
@@ -68,7 +56,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding: clamp(3px, 1vw, 36px); /* min 3px — строго */
+  padding: clamp(0px, 1vw, 36px);
 }
 
 /* карточка */
@@ -141,9 +129,10 @@ body{
   opacity: 0.92;
   max-width: 92%;
   margin: 8px auto 16px auto;
-  white-space: normal; /* разрешаем перенос между словами */
+  white-space: normal; /* переносы только по <br> */
   display: block;
 }
+
 
 /* layout блоки */
 .section{ background:transparent; padding:12px 8px; margin-bottom:12px; border-radius:8px }
@@ -189,26 +178,10 @@ body{
 
 /* RSVP стили */
 .rsvp2-block { background: linear-gradient(180deg, var(--card-top), var(--card-bottom)); border: 1px solid var(--border-muted); box-shadow: 0 8px 20px var(--shadow); padding: 18px; border-radius: 10px; max-width: 640px; margin: 0 auto; }
-.rsvp2-title { /* word-break: keep-all; */   text-align:center; font-size:18px; font-weight:800; color:var(--text); margin-bottom:14px; padding-bottom:12px; position:relative; letter-spacing:1px; font-family:'Cheque', Georgia, serif; }
-
-/* ФОРМЫ: запрещаем разрыв внутри слов в полях и кнопках */
+.rsvp2-title { word-break: keep-all;   text-align:center; font-size:18px; font-weight:800; color:var(--text); margin-bottom:14px; padding-bottom:12px; position:relative; letter-spacing:1px; font-family:'Cheque', Georgia, serif; }
 .rsvp2-row { margin-bottom:16px; }
 .rsvp2-label { display:block; font-size:14px; color:var(--text); margin-bottom:8px; font-weight:600; }
-.rsvp2-input, .rsvp2-input[type="text"], .rsvp2-input[type="email"], .rsvp2-input[type="number"], #partnerName, #kidsList input {
-  width:100%;
-  padding:10px 12px;
-  border-radius:8px;
-  border:1px solid rgba(184,135,46,0.12);
-  background: rgba(255,255,255,0.02);
-  color:var(--text);
-  font-size:14px;
-  outline:none;
-  transition: box-shadow .18s ease, border-color .18s ease;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-  word-break: normal;
-  overflow-wrap: normal;
-  hyphens: none;
-}
+.rsvp2-input, .rsvp2-input[type="text"], .rsvp2-input[type="email"], .rsvp2-input[type="number"], #partnerName, #kidsList input { width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(184,135,46,0.12); background: rgba(255,255,255,0.02); color:var(--text); font-size:14px; outline:none; transition: box-shadow .18s ease, border-color .18s ease; box-shadow: inset 0 1px 0 rgba(255,255,255,0.02); }
 .rsvp2-input:focus { border-color: var(--accent); box-shadow: 0 6px 18px rgba(43,36,22,0.06); }
 .option { display:flex; align-items:center; gap:10px; margin:8px 0; font-size:14px; color:var(--text); cursor:pointer; flex-wrap:wrap; }
 .option input[type="radio"] { width:18px; height:18px; accent-color: var(--accent); cursor:pointer; }
@@ -235,9 +208,6 @@ body{
   text-transform: uppercase;
   color: var(--text);
   margin-bottom: 8px;
-  hyphens: none;
-  word-break: normal;
-  overflow-wrap: normal;
 }
 
 /* 2) Заголовки секций в Cheque + золотая полоса под ними */
@@ -252,9 +222,6 @@ body{
   position: relative;
   padding-bottom: 14px;
   margin-bottom: 10px;
-  hyphens: none;
-  word-break: normal;
-  overflow-wrap: normal;
 }
 
 /* золотая полоса под заголовками (центральная полоска) */
@@ -295,7 +262,59 @@ body{
 }
 
 /* 4) Переносы и защита от выхода текста */
-/* Убраны break-word/auto-hyphens — запрещаем разрыв внутри слов по умолчанию */
+/* .option {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+} */
+
+/* 5) На узких экранах скрываем ТОЛЬКО фон (паттерн), оставляем рамку.
+   Раньше мы прятали углы — теперь они остаются видимыми */
+@media (max-width: 720px) {
+  body {
+    background-image: none !important;
+    background-color: var(--bg) !important;
+  }
+
+  /* corners остаются видимыми; уменьшим их масштаб на маленьких экранах,
+     чтобы не занимали слишком много места */
+  .corner { transform-origin: center; transform: scale(0.78); opacity: 0.95; }
+
+  /* слегка уменьшим inset-бордеры (чтобы не выглядело громоздко) */
+  .card::before { box-shadow: inset 0 0 0 1.5px rgba(184,135,46,0.16); }
+  .card::after  { box-shadow: inset 0 0 0 1.5px rgba(184,135,46,0.10); }
+
+  .card { margin: 0 8px; padding-left: clamp(12px, 4vw, 20px); padding-right: clamp(12px, 4vw, 20px); }
+}
+
+/* responsive typography and controls */
+.pre-title { font-size: clamp(18px, 4.5vw, 30px); }
+.title-name { font-size: clamp(24px, 6.5vw, 40px); }
+.title-jubely { font-size: clamp(14px, 3.5vw, 22px); }
+.subtitle { font-size: clamp(16px, 4.5vw, 25px); margin: 28px 12px 18px; }
+.subtitle2 { font-size: clamp(13px, 3.8vw, 18px); max-width: 92%; margin: 8px auto; line-height:1.45; hyphens:auto; }
+.card { padding: clamp(14px, 4vw, 28px); margin: 0 12px; }
+.rsvp2-input, .rsvp2-btn, #partnerName, #kidsList input, .map-links a { max-width:100%; box-sizing:border-box; overflow-wrap:break-word; word-break:break-word; -webkit-hyphens:auto; -ms-hyphens:auto; hyphens:auto; }
+.calendar-grid .day { font-size: clamp(12px, 2.6vw, 16px); height: clamp(34px, 8vw, 44px); padding:4px; }
+.dress-photos { gap: clamp(8px, 2.6vw, 16px); }
+.dress-photo { max-width: clamp(160px, 40vw, 280px); }
+
+/* small screens */
+@media (max-width: 420px) {
+  .pre-title { font-size: clamp(16px, 5.6vw, 22px); }
+  .title-name { font-size: clamp(20px, 7.4vw, 30px); }
+  .subtitle { font-size: clamp(14px, 4.2vw, 18px); }
+  .subtitle2 { font-size: clamp(12px, 3.6vw, 16px); }
+  .count-num { font-size:20px; padding:8px; min-width:58px; }
+  .map-links a { min-width: 120px; font-size: 12px; padding: 9px 10px; }
+}
+
+/* print */
+@media print { body{ background:white; color:black } .card{ box-shadow:none; border:none } .frame{ display:none } }
+
+
+/* ---- Fix: radio + label alignment: keep text always to the right of the circle ---- */
+
 .option {
   display: inline-flex;        /* label как inline-flex — не ломает поток, но делает flex-контейнер */
   align-items: center;        /* вертикальное выравнивание круга и текста */
@@ -303,10 +322,7 @@ body{
   flex-wrap: nowrap;          /* запрещаем перенос внутренних flex-элементов на новую строку */
   width: 100%;                /* сохраняем поведение: метки занимают ширину контейнера */
   box-sizing: border-box;
-  white-space: normal;        /* разрешаем перенос между словами, но не внутри слова */
-  hyphens: none;
-  word-break: normal;
-  overflow-wrap: normal;
+  white-space: normal;        /* разрешаем перенос внутри текстовой области (но не переносим input) */
 }
 
 /* Убедимся, что сам radio не растягивается и не даёт лишних отступов */
@@ -319,13 +335,15 @@ body{
 }
 
 /* Текст внутри label — будет занимать оставшееся место и корректно переноситься */
-.option span {
+/* .option::text { noop — нельзя стилизовать текстовые ноды, но ниже даём fallback через span, если понадобится } */
+
+/* Вариант с явным переносом текста: если хочешь, оборачивать текст в <span> внутри label — даёт дополнительный контроль */
+/* .option span {
   display: inline-block;
-  min-width: 0;
-  word-break: normal;       /* НЕ ломать слова */
-  overflow-wrap: normal;
-  hyphens: none;
-}
+  min-width: 0;             
+  word-break: break-word;
+  overflow-wrap: break-word;
+} */
 
 /* На очень узких экранах немного уменьшим gap чтобы не давать переноса строки */
 @media (max-width: 420px) {
@@ -337,7 +355,7 @@ body{
 
 .countdown-grid {
     display: flex !important;
-    flex-wrap: nowrap !important;  /* запрещаем переносы среди сегментов */
+    flex-wrap: nowrap !important;  /* запрещаем переносы */
     justify-content: center;
     align-items: stretch;
     gap: clamp(6px, 2vw, 14px);
@@ -357,56 +375,67 @@ body{
     min-width: 0;
     padding: clamp(8px, 2vw, 14px);
     font-size: clamp(18px, 5vw, 28px);
-    word-break: normal;
-    overflow-wrap: normal;
-    hyphens: none;
 }
 
 .count-label {
     font-size: clamp(10px, 2.4vw, 13px);
     text-align: center;
-    hyphens: none;
 }
 
-/* responsive typography and controls */
-.pre-title { font-size: clamp(18px, 4.5vw, 30px); }
-.title-name { font-size: clamp(24px, 6.5vw, 40px); }
-.title-jubely { font-size: clamp(14px, 3.5vw, 22px); }
-.subtitle { font-size: clamp(16px, 4.5vw, 25px); margin: 28px 12px 18px; }
-.subtitle2 { font-size: clamp(13px, 3.8vw, 18px); max-width: 92%; margin: 8px auto; line-height:1.45; /* hyphens:auto; убрано */ }
-.card { padding: clamp(14px, 4vw, 28px); margin: 0 12px; }
 
-/* Убираем break-word из полей и ссылок */
-.rsvp2-input, .rsvp2-btn, #partnerName, #kidsList input, .map-links a {
-  max-width:100%;
-  box-sizing:border-box;
-  overflow-wrap: normal;
-  word-break: normal;
-  -webkit-hyphens: none;
-  hyphens: none;
+/* Заголовок времени — в стиле Cheque с золотой полосой */
+/* .time-heading {
+    font-family: 'Cheque';
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    position: relative;
+} */
+
+/* линия под заголовком — та же золота как Place / Dress / RSVP
+.time-heading.deco-underline::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(184,135,46,0.25) 20%,
+        var(--accent) 50%,
+        rgba(184,135,46,0.25) 80%,
+        transparent 100%
+    );
+    border-radius: 2px;
 }
 
-.calendar-grid .day { font-size: clamp(12px, 2.6vw, 16px); height: clamp(34px, 8vw, 44px); padding:4px; }
-.dress-photos { gap: clamp(8px, 2.6vw, 16px); }
-.dress-photo { max-width: clamp(160px, 40vw, 280px); }
-
-/* small screens */
-@media (max-width: 420px) {
-  .pre-title { font-size: clamp(16px, 5.6vw, 22px); }
-  .title-name { font-size: clamp(20px, 7.4vw, 30px); }
-  .subtitle { font-size: clamp(14px, 4.2vw, 18px); }
-  .subtitle2 { font-size: clamp(12px, 3.6vw, 16px); }
-  .count-num { font-size:20px; padding:8px; min-width:58px; }
-  .map-links a { min-width: 120px; font-size: 12px; padding: 9px 10px; }
+/* Строки с временем */
+/* .time-line {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 6px 0;
 }
 
-/* print */
-@media print { body{ background:white; color:black } .card{ box-shadow:none; border:none } .frame{ display:none } }
+.time-label {
+    font-family: 'Cheque';
+    font-size: 17px;
+    color: var(--text);
+}
 
-/* ---- Fix: radio + label alignment: keep text always to the right of the circle ---- */
-/* (правки уже выше в .option) */
+.time-value {
+    font-family: 'Cheque';
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 700;
+} */ 
 
-/* Стандартный мелкий ресет для мобильных изображений */
 @media (max-width: 600px) {
     .dress-photo {
         max-width: 100% !important;   /* вместо 280px */
